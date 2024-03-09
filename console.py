@@ -56,6 +56,25 @@ class HBNBCommand(cmd.Cmd):
             except Exception as e:
                 print("Error: {}".format(e))
 
+    def do_all(self, line):
+    """Prints all string representations of all instances"""
+    args = line.split()
+    if not args:
+        print(storage.all())
+    elif args[0] not in storage.classes:
+        print("** class doesn't exist **")
+    else:
+        # Check if the syntax includes parentheses
+        if "(" in line and line[-1] == ")":
+            command = line
+        else:
+            command = "{}.all()".format(args[0])
+
+        # Use eval to execute the method call
+        instances = eval(command)
+        print(instances)
+
+
     def do_show(self, arg):
         """
         Show the string representation of an instance.
